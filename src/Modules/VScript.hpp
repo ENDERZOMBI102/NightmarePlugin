@@ -12,6 +12,9 @@ public:
     VScript();
     bool Init() override;
     void Shutdown() override;
+	/**
+	 * Get the module name
+	 * */
     const char* Name() override { return MODULE("vscript"); }
 
     // CScriptManager::CreateVM

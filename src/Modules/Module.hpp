@@ -9,6 +9,9 @@ public:
     virtual ~Module() = default;
     virtual bool Init() = 0;
     virtual void Shutdown() = 0;
+    /**
+     * Get the module name
+     * */
     virtual const char* Name() = 0;
 };
 
