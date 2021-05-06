@@ -79,19 +79,19 @@ bool NightmarePlugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn
 
                 this->StartMainThread();
 
-                console->Print("Speedrun Mode Simple Modifier loaded (version %s)\n", this->Version());
+                console->Print( "NightmarePlugin loaded (version %s)\n", this->Version() );
                 return true;
             } else {
-                console->Warning("nightmarePlugin: Failed to load engine and client modules!\n");
+                console->Warning("NightmarePlugin: Failed to load engine and client modules!\n");
             }
         } else {
-            console->Warning("nightmarePlugin: Failed to load tier1 module!\n");
+            console->Warning("NightmarePlugin: Failed to load tier1 module!\n");
         }
     } else {
-        console->Warning("nightmarePlugin: Game not supported!\n");
+        console->Warning("NightmarePlugin: Game not supported!\n");
     }
 
-    console->Warning("nightmarePlugin: Plugin failed to load!\n");
+    console->Warning("NightmarePlugin: Plugin failed to load!\n");
     return false;
 }
 void NightmarePlugin::Unload() {

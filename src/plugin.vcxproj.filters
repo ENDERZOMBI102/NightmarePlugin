@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source\Utils">
+      <UniqueIdentifier>{38a655aa-cb67-429f-b330-80f9187c2f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Modules">
+      <UniqueIdentifier>{474e36f7-b4ae-4df1-85fb-5a1dbefa1935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Offset stuff">
+      <UniqueIdentifier>{f718de65-b308-4d01-9ca0-021212018fe2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Hud">
+      <UniqueIdentifier>{39f217ea-7cf1-43cf-ae92-699502c6bddb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Cheats.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Plugin.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Variable.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="NightmarePlugin.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CelesteMoveset.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Offsets.cpp">
+      <Filter>Source\Offset stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal2.cpp">
+      <Filter>Source\Offset stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Tier1.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Console.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Client.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Server.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Engine.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\VScript.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Module.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Memory.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\SDK.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Surface.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\VGui.cpp">
+      <Filter>Source\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Hud\Hud.cpp">
+      <Filter>Source\Hud</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Offsets.hpp">
+      <Filter>Source\Offset stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Tier1.hpp">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Console.hpp">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Client.hpp">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Server.hpp">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Engine.hpp">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\VScript.hpp">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Module.hpp">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal2.hpp">
+      <Filter>Source\Offset stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Math.hpp">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Memory.hpp">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Platform.hpp">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\SDK.hpp">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Variable.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="CelesteMoveset.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Cheats.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="NightmarePlugin.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Surface.hpp">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\VGui.hpp">
+      <Filter>Source\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud\Hud.hpp">
+      <Filter>Source\Hud</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

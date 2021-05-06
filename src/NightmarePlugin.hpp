@@ -13,9 +13,9 @@
 #include "Plugin.hpp"
 #include "Utils/SDK.hpp"
 
-#define NightmarePlugin_VERSION "1.2"
+#define NightmarePlugin_VERSION "1.0"
 #define NightmarePlugin_BUILD __TIME__ " " __DATE__
-#define NightmarePlugin_WEB "https://github.com/Krzyhau/Portal2SpeedrunMod"
+#define NightmarePlugin_WEB "https://github.com/ENDERZOMBI102/NightmarePlugin"
 
 #define SAFE_UNLOAD(ptr) \
     if (ptr) {           \
