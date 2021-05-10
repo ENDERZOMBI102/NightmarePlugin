@@ -123,8 +123,7 @@
       <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "C:\Users\Flavia\CLionProjects\NightmarePlugin\bin\NightmarePlugin.dll" "C:\Program Files (x86)\Steam\steamapps\sourcemods\tn2"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
