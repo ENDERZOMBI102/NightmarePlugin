@@ -63,12 +63,62 @@ public:
     _CreateNewTextureID CreateNewTextureID = nullptr;
 
 public:
+	// TODO: those functions use pixels?
+	/**
+	 * Calculate the height of the specified font
+	 * @param font font to check
+	 * @return height of the font
+	 */
     int GetFontHeight(HFont font);
+    /**
+     * Calculate the lenght of a text using the specified font
+     * @param font font to use as base
+     * @param fmt text to get the lenght of
+     * @param ... ???
+     * @return leght of the font (in pixels?)
+     */
     int GetFontLength(HFont font, const char* fmt, ...);
+    /**
+     * Draw some text
+     * @param font font to use
+     * @param x up left x
+     * @param y up left y
+     * @param clr color of the text
+     * @param fmt text to draw
+     * @param ... ???
+     */
     void DrawTxt(HFont font, int x, int y, Color clr, const char* fmt, ...);
+    /**
+     * Draw a rectangle
+     * @param clr color of the rectangle
+     * @param x0 up left x
+     * @param y0 up left y
+     * @param x1 down right x
+     * @param y1 down right y
+     */
     void DrawRect(Color clr, int x0, int y0, int x1, int y1);
+    /**
+     * Draw a rectangle and some text in it
+     * @param clr rectangle color
+     * @param x0 up left x
+     * @param y0 up left y
+     * @param x1 down right x
+     * @param y1 down right y
+     * @param font font to use
+     * @param fontClr color of the text
+     * @param fmt text to draw
+     * @param ... ???
+     */
     void DrawRectAndCenterTxt(Color clr, int x0, int y0, int x1, int y1, HFont font, Color fontClr, const char* fmt, ...);
+    /**
+     *
+     * @return width of this surface
+     */
     int GetWidth();
+    /**
+     *
+     * @return height of this surface
+     */
     int GetHeight();
 
     bool Init() override;
