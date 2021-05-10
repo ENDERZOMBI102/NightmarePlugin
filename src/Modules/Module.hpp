@@ -1,6 +1,10 @@
 #pragma once
 #include <vector>
 
+
+/**
+ * May rappresents a game/engine's DLL or a plugin module
+ */
 class Module {
 public:
     bool hasLoaded;

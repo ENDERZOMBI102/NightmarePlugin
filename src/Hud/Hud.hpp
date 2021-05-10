@@ -2,10 +2,22 @@
 
 #include "../Utils/SDK.hpp"
 
+/**
+ * Abstract class representing a bare-bones HUD element
+ *
+ * An object of a subclass of this class is considered an in-game HUD.
+ */
 class Hud {
 public:
-    virtual bool DrawingOnTop() {return false;}
-    virtual void Draw();
+    /**
+     *
+     * @return if this element should be drawn on top (of what?)
+     */
+	virtual bool DrawingOnTop() {return false;}
+    /**
+     * Draws this element
+     */
+	virtual void Draw();
 };
 
 
@@ -33,7 +45,7 @@ private:
     int displayBerryCount = 0;
     int oldBerryCount = 0;
     float posOffset = 0.0;
-    float posOffset2 = 0.0; //ah, yes, good variable name
+    float posOffset2 = 0.0; //ah, yes, good variable name // ENDER approves
     float collectAnimState = 0.0;
     float prevRealTime = 0;
 public:

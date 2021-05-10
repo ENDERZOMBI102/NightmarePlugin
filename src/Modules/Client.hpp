@@ -3,6 +3,9 @@
 #include "Module.hpp"
 #include "../Utils.hpp"
 
+/**
+ * Rappresents the client DLL
+ */
 class Client : public Module {
 public:
     Interface* g_HudChat;
@@ -15,9 +18,26 @@ public:
     using _NextParticleSystem = void*(__func*)(void* thisptr, void* searchResult);
     _NextParticleSystem NextParticleSystem = nullptr;
 
+    /**
+     * TODO: i have no idea what this is
+     * @param prev
+     * @return
+     */
     CNewParticleEffect* GetParticleSystem(CNewParticleEffect* prev);
+    // TODO: does the "portalgun indicator" refer to the small light on the pgun model?
+    /**
+     *
+     * @return current portalgun indicator color
+     */
     inline Vector GetPortalGunIndicatorColor() const { return this->portalGunIndicatorColor; }
+    /**
+     * Sets the portalgun indicator color
+     * @param v RGB vector
+     */
     void SetPortalGunIndicatorColor(Vector v);
+    /**
+     * Updates the client's rendered portalgun indicator color
+     */
     void UpdatePortalGunIndicatorColor();
 
 
