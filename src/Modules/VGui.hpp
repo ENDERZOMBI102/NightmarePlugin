@@ -8,6 +8,9 @@
 #include "Surface.hpp"
 #include "../Hud/Hud.hpp"
 
+/**
+ * Represents the vgui2 DLL
+ */
 class VGui : public Module {
 public:
     Interface* enginevgui = nullptr;

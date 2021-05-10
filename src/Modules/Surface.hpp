@@ -7,6 +7,10 @@
 #include "../Offsets.hpp"
 #include "../Utils.hpp"
 
+
+/**
+ * Represents the surface DLL
+ */
 class Surface : public Module {
 public:
     Interface* matsurface = nullptr;

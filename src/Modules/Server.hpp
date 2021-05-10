@@ -3,6 +3,9 @@
 #include "Module.hpp"
 #include "../Utils.hpp"
 
+/**
+ * Represents the server DLL
+ */
 class Server : public Module {
 public:
     Interface* g_GameMovement = nullptr;

@@ -3,6 +3,9 @@
 #include "Module.hpp"
 #include "../Utils.hpp"
 
+/**
+ * Represents the vscript DLL
+ */
 class VScript : public Module {
 public:
     Interface* scriptmanager = nullptr;

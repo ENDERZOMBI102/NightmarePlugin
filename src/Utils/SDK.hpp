@@ -8,6 +8,8 @@
 #define __funcc __attribute__((__cdecl__))
 #endif
 
+// TODO: document this nightmare
+
 struct Vector {
     float x, y, z;
     Vector() : x(0), y(0), z(0) {};

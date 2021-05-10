@@ -10,6 +10,9 @@
 #define TIER1 "libvstdlib"
 #endif
 
+/**
+ * Represents the tier1 DLL
+ */
 class Tier1 : public Module {
 public:
     Interface* g_pCVar = nullptr;
