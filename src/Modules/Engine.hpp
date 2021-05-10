@@ -3,6 +3,9 @@
 #include "Tier1.hpp"
 #include "../Interface.hpp"
 
+/**
+ * Represents the engine DLL
+ */
 class Engine : public Module {
 public:
     Interface* engineClient = nullptr;
@@ -24,10 +27,31 @@ public:
     using _TraceRay = void(__func*)(void* thisptr, const Ray_t& ray, unsigned int fMask, ITraceFilter* pTraceFilter, CGameTrace* pTrace);
 
     _GetScreenSize GetScreenSize = nullptr;
+    /**
+     * Precache a model
+     * @param pName name/path of the model
+     * @param bPreload should this model be preloaded?
+     */
     _PrecacheModel PrecacheModel = nullptr;
     _GetActiveSplitScreenPlayerSlot GetActiveSplitScreenPlayerSlot = nullptr;
+    /**
+     * @param slot
+     * @param ptext
+     * @param nTickDelay
+     */
     _Cbuf_AddText Cbuf_AddText = nullptr;
+    /**
+     * Executes a command on the given client
+     * @param pEdict client to execute the command on
+     * @param szFmt command to execute
+     */
     _ClientCommand ClientCommand = nullptr;
+    /**
+     * @param ray
+     * @param fMask
+     * @param pTraceFilter
+     * @param pTrace
+     */
     _TraceRay TraceRay = nullptr;
 
     void* s_CommandBuffer = nullptr;

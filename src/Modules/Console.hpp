@@ -31,11 +31,30 @@ public:
     using _DevWarning = void(__cdecl*)(const char* pMsgFormat, ...);
     using _CommandLine = ICommandLine * (__cdecl*)();
 
+    /**
+     * @param pMsgFormat message to log
+     */
     _Msg Msg = nullptr;
+	/**
+	 * @param clr color of the text
+	 * @param pMsgFormat message to log
+	 */
     _ColorMsg ColorMsg = nullptr;
+	/**
+	 * @param pMsgFormat message to log
+	 */
     _Warning Warning = nullptr;
+	/**
+	 * @param pMsgFormat message to log
+	 */
     _DevMsg DevMsg = nullptr;
+	/**
+	 * @param pMsgFormat message to log
+	 */
     _DevWarning DevWarning = nullptr;
+	/**
+	* @param pMsgFormat message to log
+	 */
     _CommandLine CommandLine = nullptr;
 
     Console();
@@ -43,12 +62,24 @@ public:
     void Shutdown() override;
     const char* Name() override { return MODULE(TIER0); }
 
+    /**
+     * prints a message to console (?)
+     * @tparam T
+     * @param fmt text to print
+     * @param args
+     */
     template <typename... T>
     void Print(const char* fmt, T... args)
     {
         this->ColorMsg(CHAOS_PRINT_COLOR, fmt, args...);
     }
 
+    /**
+     * prints a message to console (?)
+     * @tparam T
+     * @param fmt text to print
+     * @param args
+     */
     template <typename... T>
     void PrintActive(const char* fmt, T... args)
     {

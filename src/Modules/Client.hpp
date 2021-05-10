@@ -4,7 +4,7 @@
 #include "../Utils.hpp"
 
 /**
- * Rappresents the client DLL
+ * Represents the client DLL
  */
 class Client : public Module {
 public:
@@ -13,9 +13,16 @@ public:
     Interface* g_ClientDLL;
 
     using _ChatPrintf = void(*)(void* thisptr, int iPlayerIndex, int iFilter, const char* fmt, ...);
+    /**
+     * Print a message in the chat
+     * @param iPlayerIndex ???
+     * @param iFilter ???
+     * @param fmt message to print
+     */
     _ChatPrintf ChatPrintf = nullptr;
 
     using _NextParticleSystem = void*(__func*)(void* thisptr, void* searchResult);
+    // TODO: i have no idea what this is
     _NextParticleSystem NextParticleSystem = nullptr;
 
     /**
