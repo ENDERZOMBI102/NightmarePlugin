@@ -34,11 +34,11 @@ int StaminaHud::GetStaminaTexture() {
 }
 
 void StaminaHud::Draw() {
-    //get width and height for gui drawing
+    // get width and height for gui drawing
     int width, height;
     engine->GetScreenSize(width, height);
 
-    //drawing covering color
+    // drawing covering color
     Color cColor = this->staminaColor;
     if ((cColor.r() || cColor.g() || cColor.b()) && cColor.a() > 0) {
         if (int texture = this->GetStaminaTexture()) {
