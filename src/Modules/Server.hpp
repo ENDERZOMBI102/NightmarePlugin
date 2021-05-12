@@ -24,7 +24,15 @@ public:
     using _UTIL_PlayerByIndex = void* (__cdecl*)(int index);
     _UTIL_PlayerByIndex UTIL_PlayerByIndex = nullptr;
 
+    /**
+     * Gets the player denoted by this index
+     * @param index index of the player
+     */
     void* GetPlayer(int index);
+    /**
+     * Gets an handle for the entity denoted by this index
+     * @param index index of the entity
+     */
     void* GetEntityHandleByIndex(int index);
 
     CGlobalVars* gpGlobals = nullptr;
