@@ -14,44 +14,43 @@ struct Vector {
     float x, y, z;
     Vector() : x(0), y(0), z(0) {};
     Vector(float x, float y, float z) { this->x = x; this->y = y;  this->z = z; };
-    inline float Length()
-    {
+    inline float Length() {
         return std::sqrt(x * x + y * y + z * z);
     }
-    inline float Length2D()
-    {
+
+    inline float Length2D() {
         return std::sqrt(x * x + y * y);
     }
-    inline Vector operator*(float fl)
-    {
+
+    inline Vector operator*(float fl) {
         Vector res;
         res.x = x * fl;
         res.y = y * fl;
         res.z = z * fl;
         return res;
     }
-    inline Vector operator+(Vector vec)
-    {
+
+    inline Vector operator+(Vector vec) {
         Vector res;
         res.x = x + vec.x;
         res.y = y + vec.y;
         res.z = z + vec.z;
         return res;
     }
-    inline float& operator[](int i)
-    {
+
+    inline float& operator[](int i) {
         return ((float*)this)[i];
     }
-    inline float operator[](int i) const
-    {
+
+    inline float operator[](int i) const {
         return ((float*)this)[i];
     }
-    inline float operator*(Vector vec) 
-    {
+
+    inline float operator*(Vector vec) {
         return x*vec.x + y*vec.y + z*vec.z;
     }
-    inline Vector operator^(Vector vec) 
-    {
+
+    inline Vector operator^(Vector vec) {
         Vector res;
         res.x = y * vec.z - z * vec.y;
         res.y = z * vec.x - x * vec.z;
@@ -65,20 +64,19 @@ struct QAngle {
 };
 
 struct Color {
-    Color()
-    {
-        *((int*)this) = 255;
+    Color(){
+        *( (int*) this) = 255;
     }
-    Color(int _r, int _g, int _b)
-    {
+
+    Color(int _r, int _g, int _b) {
         SetColor(_r, _g, _b, 255);
     }
-    Color(int _r, int _g, int _b, int _a)
-    {
+
+    Color(int _r, int _g, int _b, int _a) {
         SetColor(_r, _g, _b, _a);
     }
-    void SetColor(int _r, int _g, int _b, int _a = 255)
-    {
+
+    void SetColor(int _r, int _g, int _b, int _a = 255) {
         _color[0] = (unsigned char)_r;
         _color[1] = (unsigned char)_g;
         _color[2] = (unsigned char)_b;
@@ -154,16 +152,15 @@ struct CCommand {
     char m_pArgvBuffer[COMMAND_MAX_LENGTH];
     const char* m_ppArgv[COMMAND_MAX_ARGC];
 
-    int ArgC() const
-    {
+    int ArgC() const {
         return this->m_nArgc;
     }
-    const char* Arg(int nIndex) const
-    {
+
+    const char* Arg(int nIndex) const {
         return this->m_ppArgv[nIndex];
     }
-    const char* operator[](int nIndex) const
-    {
+
+    const char* operator[](int nIndex) const {
         return Arg(nIndex);
     }
 };
@@ -226,8 +223,7 @@ public:
         , m_fnChangeCallback(nullptr)
     {
     }
-    ~ConVar()
-    {
+    ~ConVar() {
         if (this->m_pszString) {
             delete[] this->m_pszString;
             this->m_pszString = nullptr;
@@ -955,18 +951,17 @@ public:
 #define MEM_ALLOC_CREDIT_CLASS() ((void)0)
 
 template <class T>
-inline void Construct(T* pMemory)
-{
+inline void Construct(T* pMemory) {
     ::new (pMemory) T;
 }
+
 template <class T>
-inline void CopyConstruct(T* pMemory, T const& src)
-{
+inline void CopyConstruct(T* pMemory, T const& src) {
     ::new (pMemory) T(src);
 }
+
 template <class T>
-inline void Destruct(T* pMemory)
-{
+inline void Destruct(T* pMemory) {
     pMemory->~T();
 }
 
@@ -1113,6 +1108,7 @@ inline CUtlVector<T, A>::CUtlVector(int growSize, int initSize)
 {
     ResetDbgInfo();
 }
+
 template <typename T, class A>
 inline CUtlVector<T, A>::CUtlVector(T* pMemory, int allocationCount, int numElements)
     : m_Memory(pMemory, allocationCount)
@@ -1120,14 +1116,14 @@ inline CUtlVector<T, A>::CUtlVector(T* pMemory, int allocationCount, int numElem
 {
     ResetDbgInfo();
 }
+
 template <typename T, class A>
-inline CUtlVector<T, A>::~CUtlVector()
-{
+inline CUtlVector<T, A>::~CUtlVector() {
     Purge();
 }
+
 template <typename T, class A>
-inline CUtlVector<T, A>& CUtlVector<T, A>::operator=(const CUtlVector<T, A>& other)
-{
+inline CUtlVector<T, A>& CUtlVector<T, A>::operator=(const CUtlVector<T, A>& other) {
     int nCount = other.Count();
     SetSize(nCount);
     for (int i = 0; i < nCount; i++) {
@@ -1135,74 +1131,74 @@ inline CUtlVector<T, A>& CUtlVector<T, A>::operator=(const CUtlVector<T, A>& oth
     }
     return *this;
 }
+
 template <typename T, class A>
-inline T& CUtlVector<T, A>::operator[](int i)
-{
+inline T& CUtlVector<T, A>::operator[](int i) {
     return m_Memory[i];
 }
+
 template <typename T, class A>
-inline const T& CUtlVector<T, A>::operator[](int i) const
-{
+inline const T& CUtlVector<T, A>::operator[](int i) const {
     return m_Memory[i];
 }
+
 template <typename T, class A>
-inline T& CUtlVector<T, A>::Element(int i)
-{
+inline T& CUtlVector<T, A>::Element(int i) {
     return m_Memory[i];
 }
+
 template <typename T, class A>
-inline const T& CUtlVector<T, A>::Element(int i) const
-{
+inline const T& CUtlVector<T, A>::Element(int i) const {
     return m_Memory[i];
 }
+
 template <typename T, class A>
-inline T& CUtlVector<T, A>::Head()
-{
+inline T& CUtlVector<T, A>::Head() {
     Assert(m_Size > 0);
     return m_Memory[0];
 }
+
 template <typename T, class A>
-inline const T& CUtlVector<T, A>::Head() const
-{
+inline const T& CUtlVector<T, A>::Head() const {
     Assert(m_Size > 0);
     return m_Memory[0];
 }
+
 template <typename T, class A>
-inline T& CUtlVector<T, A>::Tail()
-{
+inline T& CUtlVector<T, A>::Tail() {
     Assert(m_Size > 0);
     return m_Memory[m_Size - 1];
 }
+
 template <typename T, class A>
-inline const T& CUtlVector<T, A>::Tail() const
-{
+inline const T& CUtlVector<T, A>::Tail() const {
     Assert(m_Size > 0);
     return m_Memory[m_Size - 1];
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::Size() const
-{
+inline int CUtlVector<T, A>::Size() const {
     return m_Size;
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::Count() const
-{
+inline int CUtlVector<T, A>::Count() const {
     return m_Size;
 }
+
 template <typename T, class A>
-inline bool CUtlVector<T, A>::IsValidIndex(int i) const
-{
+inline bool CUtlVector<T, A>::IsValidIndex(int i) const {
     return (i >= 0) && (i < m_Size);
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::InvalidIndex()
-{
+inline int CUtlVector<T, A>::InvalidIndex() {
     return -1;
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::GrowVector(int num)
-{
-    if (m_Size + num > m_Memory.NumAllocated()) {
+void CUtlVector<T, A>::GrowVector(int num) {
+    if ( m_Size + num > m_Memory.NumAllocated() ) {
         MEM_ALLOC_CREDIT_CLASS();
         m_Memory.Grow(m_Size + num - m_Memory.NumAllocated());
     }
@@ -1210,9 +1206,9 @@ void CUtlVector<T, A>::GrowVector(int num)
     m_Size += num;
     ResetDbgInfo();
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::Sort(int(__cdecl* pfnCompare)(const T*, const T*))
-{
+void CUtlVector<T, A>::Sort( int(__cdecl* pfnCompare)(const T*, const T*) ) {
     typedef int(__cdecl * QSortCompareFunc_t)(const void*, const void*);
     if (Count() <= 1)
         return;
@@ -1231,54 +1227,54 @@ void CUtlVector<T, A>::Sort(int(__cdecl* pfnCompare)(const T*, const T*))
         }
     }
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::EnsureCapacity(int num)
-{
+void CUtlVector<T, A>::EnsureCapacity(int num) {
     MEM_ALLOC_CREDIT_CLASS();
     m_Memory.EnsureCapacity(num);
     ResetDbgInfo();
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::EnsureCount(int num)
-{
+void CUtlVector<T, A>::EnsureCount(int num) {
     if (Count() < num)
         AddMultipleToTail(num - Count());
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::ShiftElementsRight(int elem, int num)
-{
+void CUtlVector<T, A>::ShiftElementsRight(int elem, int num) {
     Assert(IsValidIndex(elem) || (m_Size == 0) || (num == 0));
     int numToMove = m_Size - elem - num;
     if ((numToMove > 0) && (num > 0))
         memmove(&Element(elem + num), &Element(elem), numToMove * sizeof(T));
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::ShiftElementsLeft(int elem, int num)
-{
+void CUtlVector<T, A>::ShiftElementsLeft(int elem, int num) {
     Assert(IsValidIndex(elem) || (m_Size == 0) || (num == 0));
     int numToMove = m_Size - elem - num;
     if ((numToMove > 0) && (num > 0)) {
         memmove(&Element(elem), &Element(elem + num), numToMove * sizeof(T));
     }
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::AddToHead()
-{
+inline int CUtlVector<T, A>::AddToHead() {
     return InsertBefore(0);
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::AddToTail()
-{
+inline int CUtlVector<T, A>::AddToTail() {
     return InsertBefore(m_Size);
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::InsertAfter(int elem)
-{
+inline int CUtlVector<T, A>::InsertAfter(int elem) {
     return InsertBefore(elem + 1);
 }
+
 template <typename T, class A>
-int CUtlVector<T, A>::InsertBefore(int elem)
-{
+int CUtlVector<T, A>::InsertBefore(int elem) {
     Assert((elem == Count()) || IsValidIndex(elem));
 
     GrowVector();
@@ -1286,27 +1282,27 @@ int CUtlVector<T, A>::InsertBefore(int elem)
     Construct(&Element(elem));
     return elem;
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::AddToHead(const T& src)
-{
+inline int CUtlVector<T, A>::AddToHead(const T& src) {
     Assert((Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count())));
     return InsertBefore(0, src);
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::AddToTail(const T& src)
-{
+inline int CUtlVector<T, A>::AddToTail(const T& src) {
     Assert((Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count())));
     return InsertBefore(m_Size, src);
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::InsertAfter(int elem, const T& src)
-{
+inline int CUtlVector<T, A>::InsertAfter(int elem, const T& src) {
     Assert((Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count())));
     return InsertBefore(elem + 1, src);
 }
+
 template <typename T, class A>
-int CUtlVector<T, A>::InsertBefore(int elem, const T& src)
-{
+int CUtlVector<T, A>::InsertBefore(int elem, const T& src) {
     Assert((Base() == NULL) || (&src < Base()) || (&src >= (Base() + Count())));
 
     Assert((elem == Count()) || IsValidIndex(elem));
@@ -1316,37 +1312,37 @@ int CUtlVector<T, A>::InsertBefore(int elem, const T& src)
     CopyConstruct(&Element(elem), src);
     return elem;
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::AddMultipleToHead(int num)
-{
+inline int CUtlVector<T, A>::AddMultipleToHead(int num) {
     return InsertMultipleBefore(0, num);
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::AddMultipleToTail(int num, const T* pToCopy)
-{
+inline int CUtlVector<T, A>::AddMultipleToTail(int num, const T* pToCopy) {
     Assert((Base() == NULL) || !pToCopy || (pToCopy + num < Base()) || (pToCopy >= (Base() + Count())));
 
     return InsertMultipleBefore(m_Size, num, pToCopy);
 }
+
 template <typename T, class A>
-int CUtlVector<T, A>::InsertMultipleAfter(int elem, int num)
-{
+int CUtlVector<T, A>::InsertMultipleAfter(int elem, int num) {
     return InsertMultipleBefore(elem + 1, num);
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::SetCount(int count)
-{
+void CUtlVector<T, A>::SetCount(int count) {
     RemoveAll();
     AddMultipleToTail(count);
 }
+
 template <typename T, class A>
-inline void CUtlVector<T, A>::SetSize(int size)
-{
+inline void CUtlVector<T, A>::SetSize(int size) {
     SetCount(size);
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::CopyArray(const T* pArray, int size)
-{
+void CUtlVector<T, A>::CopyArray(const T* pArray, int size) {
     Assert((Base() == NULL) || !pArray || (Base() >= (pArray + size)) || (pArray >= (Base() + Count())));
 
     SetSize(size);
@@ -1354,16 +1350,16 @@ void CUtlVector<T, A>::CopyArray(const T* pArray, int size)
         (*this)[i] = pArray[i];
     }
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::Swap(CUtlVector<T, A>& vec)
-{
+void CUtlVector<T, A>::Swap(CUtlVector<T, A>& vec) {
     m_Memory.Swap(vec.m_Memory);
     std::swap(m_Size, vec.m_Size);
     swap(m_pElements, vec.m_pElements);
 }
+
 template <typename T, class A>
-int CUtlVector<T, A>::AddVectorToTail(CUtlVector const& src)
-{
+int CUtlVector<T, A>::AddVectorToTail(CUtlVector const& src) {
     Assert(&src != this);
 
     int base = Count();
@@ -1376,9 +1372,9 @@ int CUtlVector<T, A>::AddVectorToTail(CUtlVector const& src)
 
     return base;
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::InsertMultipleBefore(int elem, int num, const T* pToInsert)
-{
+inline int CUtlVector<T, A>::InsertMultipleBefore(int elem, int num, const T* pToInsert) {
     if (num == 0)
         return elem;
 
@@ -1398,23 +1394,23 @@ inline int CUtlVector<T, A>::InsertMultipleBefore(int elem, int num, const T* pT
 
     return elem;
 }
+
 template <typename T, class A>
-int CUtlVector<T, A>::Find(const T& src) const
-{
+int CUtlVector<T, A>::Find(const T& src) const {
     for (int i = 0; i < Count(); ++i) {
         if (Element(i) == src)
             return i;
     }
     return -1;
 }
+
 template <typename T, class A>
-bool CUtlVector<T, A>::HasElement(const T& src) const
-{
+bool CUtlVector<T, A>::HasElement(const T& src) const {
     return (Find(src) >= 0);
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::FastRemove(int elem)
-{
+void CUtlVector<T, A>::FastRemove(int elem) {
     Assert(IsValidIndex(elem));
 
     Destruct(&Element(elem));
@@ -1423,16 +1419,16 @@ void CUtlVector<T, A>::FastRemove(int elem)
         --m_Size;
     }
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::Remove(int elem)
-{
+void CUtlVector<T, A>::Remove(int elem) {
     Destruct(&Element(elem));
     ShiftElementsLeft(elem);
     --m_Size;
 }
+
 template <typename T, class A>
-bool CUtlVector<T, A>::FindAndRemove(const T& src)
-{
+bool CUtlVector<T, A>::FindAndRemove(const T& src) {
     int elem = Find(src);
     if (elem != -1) {
         Remove(elem);
@@ -1440,9 +1436,9 @@ bool CUtlVector<T, A>::FindAndRemove(const T& src)
     }
     return false;
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::RemoveMultiple(int elem, int num)
-{
+void CUtlVector<T, A>::RemoveMultiple(int elem, int num) {
     Assert(elem >= 0);
     Assert(elem + num <= Count());
 
@@ -1452,38 +1448,38 @@ void CUtlVector<T, A>::RemoveMultiple(int elem, int num)
     ShiftElementsLeft(elem, num);
     m_Size -= num;
 }
+
 template <typename T, class A>
-void CUtlVector<T, A>::RemoveAll()
-{
+void CUtlVector<T, A>::RemoveAll() {
     for (int i = m_Size; --i >= 0;) {
         Destruct(&Element(i));
     }
 
     m_Size = 0;
 }
+
 template <typename T, class A>
-inline void CUtlVector<T, A>::Purge()
-{
+inline void CUtlVector<T, A>::Purge() {
     RemoveAll();
     m_Memory.Purge();
     ResetDbgInfo();
 }
+
 template <typename T, class A>
-inline void CUtlVector<T, A>::PurgeAndDeleteElements()
-{
+inline void CUtlVector<T, A>::PurgeAndDeleteElements() {
     for (int i = 0; i < m_Size; i++) {
         delete Element(i);
     }
     Purge();
 }
+
 template <typename T, class A>
-inline void CUtlVector<T, A>::Compact()
-{
+inline void CUtlVector<T, A>::Compact() {
     m_Memory.Purge(m_Size);
 }
+
 template <typename T, class A>
-inline int CUtlVector<T, A>::NumAllocated() const
-{
+inline int CUtlVector<T, A>::NumAllocated() const {
     return m_Memory.NumAllocated();
 }
 
@@ -1501,6 +1497,7 @@ CUtlMemory<T, I>::CUtlMemory(int nGrowSize, int nInitAllocationCount)
         m_pMemory = (T*)malloc(m_nAllocationCount * sizeof(T));
     }
 }
+
 template <class T, class I>
 CUtlMemory<T, I>::CUtlMemory(T* pMemory, int numElements)
     : m_pMemory(pMemory)
@@ -1508,6 +1505,7 @@ CUtlMemory<T, I>::CUtlMemory(T* pMemory, int numElements)
 {
     m_nGrowSize = EXTERNAL_BUFFER_MARKER;
 }
+
 template <class T, class I>
 CUtlMemory<T, I>::CUtlMemory(const T* pMemory, int numElements)
     : m_pMemory((T*)pMemory)
@@ -1515,14 +1513,14 @@ CUtlMemory<T, I>::CUtlMemory(const T* pMemory, int numElements)
 {
     m_nGrowSize = EXTERNAL_CONST_BUFFER_MARKER;
 }
+
 template <class T, class I>
-CUtlMemory<T, I>::~CUtlMemory()
-{
+CUtlMemory<T, I>::~CUtlMemory() {
     Purge();
 }
+
 template <class T, class I>
-void CUtlMemory<T, I>::Init(int nGrowSize /*= 0*/, int nInitSize /*= 0*/)
-{
+void CUtlMemory<T, I>::Init(int nGrowSize /*= 0*/, int nInitSize /*= 0*/) {
     Purge();
 
     m_nGrowSize = nGrowSize;
@@ -1535,16 +1533,16 @@ void CUtlMemory<T, I>::Init(int nGrowSize /*= 0*/, int nInitSize /*= 0*/)
         m_pMemory = (T*)malloc(m_nAllocationCount * sizeof(T));
     }
 }
+
 template <class T, class I>
-void CUtlMemory<T, I>::Swap(CUtlMemory<T, I>& mem)
-{
+void CUtlMemory<T, I>::Swap(CUtlMemory<T, I>& mem) {
     swap(m_nGrowSize, mem.m_nGrowSize);
     swap(m_pMemory, mem.m_pMemory);
     swap(m_nAllocationCount, mem.m_nAllocationCount);
 }
+
 template <class T, class I>
-void CUtlMemory<T, I>::ConvertToGrowableMemory(int nGrowSize)
-{
+void CUtlMemory<T, I>::ConvertToGrowableMemory(int nGrowSize) {
     if (!IsExternallyAllocated())
         return;
 
@@ -1561,9 +1559,9 @@ void CUtlMemory<T, I>::ConvertToGrowableMemory(int nGrowSize)
         m_pMemory = NULL;
     }
 }
+
 template <class T, class I>
-void CUtlMemory<T, I>::SetExternalBuffer(T* pMemory, int numElements)
-{
+void CUtlMemory<T, I>::SetExternalBuffer(T* pMemory, int numElements) {
     Purge();
 
     m_pMemory = pMemory;
@@ -1573,8 +1571,7 @@ void CUtlMemory<T, I>::SetExternalBuffer(T* pMemory, int numElements)
 }
 
 template <class T, class I>
-void CUtlMemory<T, I>::SetExternalBuffer(const T* pMemory, int numElements)
-{
+void CUtlMemory<T, I>::SetExternalBuffer(const T* pMemory, int numElements) {
     Purge();
 
     m_pMemory = const_cast<T*>(pMemory);
@@ -1582,86 +1579,86 @@ void CUtlMemory<T, I>::SetExternalBuffer(const T* pMemory, int numElements)
 
     m_nGrowSize = EXTERNAL_CONST_BUFFER_MARKER;
 }
+
 template <class T, class I>
-void CUtlMemory<T, I>::AssumeMemory(T* pMemory, int numElements)
-{
+void CUtlMemory<T, I>::AssumeMemory(T* pMemory, int numElements) {
     Purge();
 
     m_pMemory = pMemory;
     m_nAllocationCount = numElements;
 }
+
 template <class T, class I>
-inline T& CUtlMemory<T, I>::operator[](I i)
-{
+inline T& CUtlMemory<T, I>::operator[](I i) {
     Assert(!IsReadOnly());
     Assert(IsIdxValid(i));
     return m_pMemory[i];
 }
+
 template <class T, class I>
-inline const T& CUtlMemory<T, I>::operator[](I i) const
-{
+inline const T& CUtlMemory<T, I>::operator[](I i) const {
     Assert(IsIdxValid(i));
     return m_pMemory[i];
 }
+
 template <class T, class I>
-inline T& CUtlMemory<T, I>::Element(I i)
-{
+inline T& CUtlMemory<T, I>::Element(I i) {
     Assert(!IsReadOnly());
     Assert(IsIdxValid(i));
     return m_pMemory[i];
 }
+
 template <class T, class I>
-inline const T& CUtlMemory<T, I>::Element(I i) const
-{
+inline const T& CUtlMemory<T, I>::Element(I i) const {
     Assert(IsIdxValid(i));
     return m_pMemory[i];
 }
+
 template <class T, class I>
-bool CUtlMemory<T, I>::IsExternallyAllocated() const
-{
+bool CUtlMemory<T, I>::IsExternallyAllocated() const {
     return (m_nGrowSize < 0);
 }
+
 template <class T, class I>
-bool CUtlMemory<T, I>::IsReadOnly() const
-{
+bool CUtlMemory<T, I>::IsReadOnly() const {
     return (m_nGrowSize == EXTERNAL_CONST_BUFFER_MARKER);
 }
+
 template <class T, class I>
-void CUtlMemory<T, I>::SetGrowSize(int nSize)
-{
+void CUtlMemory<T, I>::SetGrowSize(int nSize) {
     Assert(!IsExternallyAllocated());
     Assert(nSize >= 0);
     m_nGrowSize = nSize;
     ValidateGrowSize();
 }
+
 template <class T, class I>
-inline T* CUtlMemory<T, I>::Base()
-{
+inline T* CUtlMemory<T, I>::Base() {
     Assert(!IsReadOnly());
     return m_pMemory;
 }
+
 template <class T, class I>
-inline const T* CUtlMemory<T, I>::Base() const
-{
+inline const T* CUtlMemory<T, I>::Base() const {
     return m_pMemory;
 }
+
 template <class T, class I>
-inline int CUtlMemory<T, I>::NumAllocated() const
-{
+inline int CUtlMemory<T, I>::NumAllocated() const {
     return m_nAllocationCount;
 }
+
 template <class T, class I>
-inline int CUtlMemory<T, I>::Count() const
-{
+inline int CUtlMemory<T, I>::Count() const {
     return m_nAllocationCount;
 }
+
 template <class T, class I>
-inline bool CUtlMemory<T, I>::IsIdxValid(I i) const
-{
+inline bool CUtlMemory<T, I>::IsIdxValid(I i) const {
     return (((int)i) >= 0) && (((int)i) < m_nAllocationCount);
 }
-inline int UtlMemory_CalcNewAllocationCount(int nAllocationCount, int nGrowSize, int nNewSize, int nBytesItem)
-{
+
+inline int UtlMemory_CalcNewAllocationCount(int nAllocationCount, int nGrowSize, int nNewSize, int nBytesItem) {
     if (nGrowSize) {
         nAllocationCount = ((1 + ((nNewSize - 1) / nGrowSize)) * nGrowSize);
     } else {
@@ -1676,9 +1673,9 @@ inline int UtlMemory_CalcNewAllocationCount(int nAllocationCount, int nGrowSize,
 
     return nAllocationCount;
 }
+
 template <class T, class I>
-void CUtlMemory<T, I>::Grow(int num)
-{
+void CUtlMemory<T, I>::Grow(int num) {
     Assert(num > 0);
 
     if (IsExternallyAllocated()) {
@@ -1718,9 +1715,9 @@ void CUtlMemory<T, I>::Grow(int num)
         Assert(m_pMemory);
     }
 }
+
 template <class T, class I>
-inline void CUtlMemory<T, I>::EnsureCapacity(int num)
-{
+inline void CUtlMemory<T, I>::EnsureCapacity(int num) {
     if (m_nAllocationCount >= num)
         return;
 
@@ -1743,9 +1740,9 @@ inline void CUtlMemory<T, I>::EnsureCapacity(int num)
         m_pMemory = (T*)malloc(m_nAllocationCount * sizeof(T));
     }
 }
+
 template <class T, class I>
-void CUtlMemory<T, I>::Purge()
-{
+void CUtlMemory<T, I>::Purge() {
     if (!IsExternallyAllocated()) {
         if (m_pMemory) {
             UTLMEMORY_TRACK_FREE();
@@ -1755,9 +1752,9 @@ void CUtlMemory<T, I>::Purge()
         m_nAllocationCount = 0;
     }
 }
+
 template <class T, class I>
-void CUtlMemory<T, I>::Purge(int numElements)
-{
+void CUtlMemory<T, I>::Purge(int numElements) {
     Assert(numElements >= 0);
 
     if (numElements > m_nAllocationCount) {
@@ -2282,8 +2279,7 @@ DECLARE_NAMED_FIELDTYPE(char, "character");
 DECLARE_NAMED_FIELDTYPE(HSCRIPT, "hscript");
 DECLARE_NAMED_FIELDTYPE(ScriptVariant_t, "variant");
 
-inline const char* ScriptFieldTypeName(__int16 eType)
-{
+inline const char* ScriptFieldTypeName(__int16 eType) {
     switch (eType) {
     case FIELD_VOID:
         return "void";
@@ -2309,8 +2305,7 @@ inline const char* ScriptFieldTypeName(__int16 eType)
 }
 
 struct ScriptFuncDescriptor_t {
-    ScriptFuncDescriptor_t()
-    {
+    ScriptFuncDescriptor_t() {
         m_pszFunction = NULL;
         m_ReturnType = FIELD_TYPEUNKNOWN;
         m_pszDescription = NULL;
@@ -2381,42 +2376,49 @@ struct ScriptVariant_t {
     {
         m_pVector = 0;
     }
+
     ScriptVariant_t(int val)
         : m_flags(0)
         , m_type(FIELD_INTEGER)
     {
         m_int = val;
     }
+
     ScriptVariant_t(float val)
         : m_flags(0)
         , m_type(FIELD_FLOAT)
     {
         m_float = val;
     }
+
     ScriptVariant_t(double val)
         : m_flags(0)
         , m_type(FIELD_FLOAT)
     {
         m_float = (float)val;
     }
+
     ScriptVariant_t(char val)
         : m_flags(0)
         , m_type(FIELD_CHARACTER)
     {
         m_char = val;
     }
+
     ScriptVariant_t(bool val)
         : m_flags(0)
         , m_type(FIELD_BOOLEAN)
     {
         m_bool = val;
     }
+
     ScriptVariant_t(HSCRIPT val)
         : m_flags(0)
         , m_type(FIELD_HSCRIPT)
     {
         m_hScript = val;
     }
+
     ScriptVariant_t(const Vector& val, bool bCopy = false)
         : m_flags(0)
         , m_type(FIELD_VECTOR)
@@ -2429,6 +2431,7 @@ struct ScriptVariant_t {
             m_flags |= SV_FREE;
         }
     }
+
     ScriptVariant_t(const Vector* val, bool bCopy = false)
         : m_flags(0)
         , m_type(FIELD_VECTOR)
@@ -2441,6 +2444,7 @@ struct ScriptVariant_t {
             m_flags |= SV_FREE;
         }
     }
+
     ScriptVariant_t(const char* val, bool bCopy = false)
         : m_flags(0)
         , m_type(FIELD_CSTRING)
@@ -2456,103 +2460,101 @@ struct ScriptVariant_t {
 
     bool IsNull() const { return (m_type == FIELD_VOID); }
 
-    operator int() const
-    {
+    operator int() const {
         Assert(m_type == FIELD_INTEGER);
         return m_int;
     }
-    operator float() const
-    {
+
+    operator float() const {
         Assert(m_type == FIELD_FLOAT);
         return m_float;
     }
-    operator const char* () const
-    {
+
+    operator const char* () const {
         Assert(m_type == FIELD_CSTRING);
         return (m_pszString) ? m_pszString : "";
     }
-    operator const Vector& () const
-    {
+
+    operator const Vector& () const {
         Assert(m_type == FIELD_VECTOR);
         static Vector vecNull = { 0, 0, 0 };
         return (m_pVector) ? *m_pVector : vecNull;
     }
-    operator char() const
-    {
+
+    operator char() const {
         Assert(m_type == FIELD_CHARACTER);
         return m_char;
     }
-    operator bool() const
-    {
+
+    operator bool() const {
         Assert(m_type == FIELD_BOOLEAN);
         return m_bool;
     }
-    operator HSCRIPT() const
-    {
+
+    operator HSCRIPT() const {
         Assert(m_type == FIELD_HSCRIPT);
         return m_hScript;
     }
 
-    void operator=(int i)
-    {
+    void operator=(int i) {
         m_type = FIELD_INTEGER;
         m_int = i;
     }
-    void operator=(float f)
-    {
+
+    void operator=(float f) {
         m_type = FIELD_FLOAT;
         m_float = f;
     }
-    void operator=(double f)
-    {
+
+    void operator=(double f) {
         m_type = FIELD_FLOAT;
         m_float = (float)f;
     }
-    void operator=(const Vector& vec)
-    {
+
+    void operator=(const Vector& vec) {
         m_type = FIELD_VECTOR;
         m_pVector = &vec;
     }
-    void operator=(const Vector* vec)
-    {
+
+    void operator=(const Vector* vec) {
         m_type = FIELD_VECTOR;
         m_pVector = vec;
     }
-    void operator=(const char* psz)
-    {
+
+    void operator=(const char* psz) {
         m_type = FIELD_CSTRING;
         m_pszString = psz;
     }
-    void operator=(char c)
-    {
+
+    void operator=(char c) {
         m_type = FIELD_CHARACTER;
         m_char = c;
     }
-    void operator=(bool b)
-    {
+
+    void operator=(bool b) {
         m_type = FIELD_BOOLEAN;
         m_bool = b;
     }
-    void operator=(HSCRIPT h)
-    {
+
+    void operator=(HSCRIPT h) {
         m_type = FIELD_HSCRIPT;
         m_hScript = h;
     }
-    void Free()
-    {
+
+    void Free() {
         if ((m_flags & SV_FREE) && (m_type == FIELD_HSCRIPT || m_type == FIELD_VECTOR || m_type == FIELD_CSTRING))
             delete m_pszString;
     }
+
     template <typename T>
-    T Get()
-    {
+    T Get() {
         T value;
         AssignTo(&value);
         return value;
     }
+
     template <typename T>
-    bool AssignTo(T* pDest)
-    {
+    bool AssignTo(T* pDest) {
         ScriptDataType_t destType = ScriptDeduceType(T);
         if (destType == FIELD_TYPEUNKNOWN) {
             //DevWarning("Unable to convert script variant to unknown type\n");
@@ -2583,8 +2585,7 @@ struct ScriptVariant_t {
                 *pDest = m_hScript;
                 return true;
             }
-        }
-        else {
+        } else {
             /* DevWarning("No free conversion of %s script variant to %s right now\n",
                 ScriptFieldTypeName(m_type), ScriptFieldTypeName<T>()); */
             if (destType != FIELD_VECTOR) {
@@ -2594,8 +2595,7 @@ struct ScriptVariant_t {
         return false;
     }
 
-    bool AssignTo(float* pDest)
-    {
+    bool AssignTo(float* pDest) {
         switch (m_type) {
         case FIELD_VOID:
             *pDest = 0;
@@ -2614,8 +2614,8 @@ struct ScriptVariant_t {
             return false;
         }
     }
-    bool AssignTo(int* pDest)
-    {
+
+    bool AssignTo(int* pDest) {
         switch (m_type) {
         case FIELD_VOID:
             *pDest = 0;
@@ -2634,8 +2634,8 @@ struct ScriptVariant_t {
             return false;
         }
     }
-    bool AssignTo(bool* pDest)
-    {
+
+    bool AssignTo(bool* pDest) {
         switch (m_type) {
         case FIELD_VOID:
             *pDest = 0;
@@ -2654,25 +2654,23 @@ struct ScriptVariant_t {
             return false;
         }
     }
-    bool AssignTo(char** pDest)
-    {
+
+    bool AssignTo(char** pDest) {
         //DevWarning("No free conversion of string or vector script variant right now\n");
         *pDest = (char*)"";
         return false;
     }
-    bool AssignTo(ScriptVariant_t* pDest)
-    {
+
+    bool AssignTo(ScriptVariant_t* pDest) {
         pDest->m_type = m_type;
         if (m_type == FIELD_VECTOR) {
             pDest->m_pVector = new Vector;
             *((Vector*)(pDest->m_pVector)) = Vector{ m_pVector->x, m_pVector->y, m_pVector->z };
             pDest->m_flags |= SV_FREE;
-        }
-        else if (m_type == FIELD_CSTRING) {
+        } else if (m_type == FIELD_CSTRING) {
             pDest->m_pszString = _strdup(m_pszString);
             pDest->m_flags |= SV_FREE;
-        }
-        else {
+        } else {
             pDest->m_int = m_int;
         }
         return false;
@@ -2895,9 +2893,8 @@ FUNC_GENERATE_ALL(DEFINE_CONST_MEMBER_FUNC_TYPE_DEDUCER);
 #define ScriptInitMemberFuncDescriptor(pDesc, class, func) ScriptInitMemberFuncDescriptorNamed(pDesc, class, func, #func)
 
 template <typename FUNCPTR_TYPE>
-inline void* ScriptConvertFuncPtrToVoid(FUNCPTR_TYPE pFunc)
-{
-    if ((sizeof(FUNCPTR_TYPE) == sizeof(void*))) {
+inline void* ScriptConvertFuncPtrToVoid(FUNCPTR_TYPE pFunc) {
+    if ( ( sizeof(FUNCPTR_TYPE) == sizeof(void*) ) ) {
         union FuncPtrConvert {
             void* p;
             FUNCPTR_TYPE pFunc;
@@ -2975,9 +2972,8 @@ inline void* ScriptConvertFuncPtrToVoid(FUNCPTR_TYPE pFunc)
 }
 
 template <typename FUNCPTR_TYPE>
-inline FUNCPTR_TYPE ScriptConvertFuncPtrFromVoid(void* p)
-{
-    if ((sizeof(FUNCPTR_TYPE) == sizeof(void*))) {
+inline FUNCPTR_TYPE ScriptConvertFuncPtrFromVoid(void* p) {
+    if ( ( sizeof(FUNCPTR_TYPE) == sizeof(void*) ) ) {
         union FuncPtrConvert {
             void* p;
             FUNCPTR_TYPE pFunc;
@@ -3339,20 +3335,17 @@ public:
     template <typename T>
     HSCRIPT RegisterInstance(T* pInstance) { return RegisterInstance(GetScriptDesc(pInstance), pInstance); }
     template <typename T>
-    HSCRIPT RegisterInstance(T* pInstance, const char* pszInstance, HSCRIPT hScope = NULL)
-    {
+    HSCRIPT RegisterInstance(T* pInstance, const char* pszInstance, HSCRIPT hScope = NULL) {
         HSCRIPT hInstance = RegisterInstance(GetScriptDesc(pInstance), pInstance);
         SetValue(hScope, pszInstance, hInstance);
         return hInstance;
     }
     virtual void RemoveInstance(HSCRIPT) = 0; // 22
-    void RemoveInstance(HSCRIPT hInstance, const char* pszInstance, HSCRIPT hScope = NULL)
-    {
+    void RemoveInstance(HSCRIPT hInstance, const char* pszInstance, HSCRIPT hScope = NULL) {
         ClearValue(hScope, pszInstance);
         RemoveInstance(hInstance);
     }
-    void RemoveInstance(const char* pszInstance, HSCRIPT hScope = NULL)
-    {
+    void RemoveInstance(const char* pszInstance, HSCRIPT hScope = NULL) {
         ScriptVariant_t val;
         if (GetValue(hScope, pszInstance, &val)) {
             if (val.m_type == FIELD_HSCRIPT) {
@@ -3384,37 +3377,36 @@ public:
     virtual void SetErrorCallback(ScriptErrorFunc_t pFunc) = 0; // 39
     virtual bool RaiseException(const char* pszExceptionText) = 0; // 40
 
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope = NULL, bool bWait = true, ScriptVariant_t* pReturn = NULL)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope = NULL, bool bWait = true, ScriptVariant_t* pReturn = NULL) {
         return ExecuteFunction(hFunction, NULL, 0, pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1) {
         ScriptVariant_t args[1];
         args[0] = arg1;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2) {
         ScriptVariant_t args[2];
         args[0] = arg1;
         args[1] = arg2;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3) {
         ScriptVariant_t args[3];
         args[0] = arg1;
         args[1] = arg2;
         args[2] = arg3;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4) {
         ScriptVariant_t args[4];
         args[0] = arg1;
         args[1] = arg2;
@@ -3422,9 +3414,9 @@ public:
         args[3] = arg4;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4, typename ARG_TYPE_5>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5) {
         ScriptVariant_t args[5];
         args[0] = arg1;
         args[1] = arg2;
@@ -3433,9 +3425,9 @@ public:
         args[4] = arg5;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4, typename ARG_TYPE_5, typename ARG_TYPE_6>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6) {
         ScriptVariant_t args[6];
         args[0] = arg1;
         args[1] = arg2;
@@ -3445,9 +3437,9 @@ public:
         args[5] = arg6;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4, typename ARG_TYPE_5, typename ARG_TYPE_6, typename ARG_TYPE_7>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7) {
         ScriptVariant_t args[7];
         args[0] = arg1;
         args[1] = arg2;
@@ -3458,9 +3450,9 @@ public:
         args[6] = arg7;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4, typename ARG_TYPE_5, typename ARG_TYPE_6, typename ARG_TYPE_7, typename ARG_TYPE_8>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8) {
         ScriptVariant_t args[8];
         args[0] = arg1;
         args[1] = arg2;
@@ -3472,9 +3464,9 @@ public:
         args[7] = arg8;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4, typename ARG_TYPE_5, typename ARG_TYPE_6, typename ARG_TYPE_7, typename ARG_TYPE_8, typename ARG_TYPE_9>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9) {
         ScriptVariant_t args[9];
         args[0] = arg1;
         args[1] = arg2;
@@ -3487,9 +3479,9 @@ public:
         args[8] = arg9;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4, typename ARG_TYPE_5, typename ARG_TYPE_6, typename ARG_TYPE_7, typename ARG_TYPE_8, typename ARG_TYPE_9, typename ARG_TYPE_10>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9, ARG_TYPE_10 arg10)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9, ARG_TYPE_10 arg10) {
         ScriptVariant_t args[10];
         args[0] = arg1;
         args[1] = arg2;
@@ -3503,9 +3495,9 @@ public:
         args[9] = arg10;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4, typename ARG_TYPE_5, typename ARG_TYPE_6, typename ARG_TYPE_7, typename ARG_TYPE_8, typename ARG_TYPE_9, typename ARG_TYPE_10, typename ARG_TYPE_11>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9, ARG_TYPE_10 arg10, ARG_TYPE_11 arg11)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9, ARG_TYPE_10 arg10, ARG_TYPE_11 arg11) {
         ScriptVariant_t args[11];
         args[0] = arg1;
         args[1] = arg2;
@@ -3520,9 +3512,9 @@ public:
         args[10] = arg11;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4, typename ARG_TYPE_5, typename ARG_TYPE_6, typename ARG_TYPE_7, typename ARG_TYPE_8, typename ARG_TYPE_9, typename ARG_TYPE_10, typename ARG_TYPE_11, typename ARG_TYPE_12>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9, ARG_TYPE_10 arg10, ARG_TYPE_11 arg11, ARG_TYPE_12 arg12)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9, ARG_TYPE_10 arg10, ARG_TYPE_11 arg11, ARG_TYPE_12 arg12) {
         ScriptVariant_t args[12];
         args[0] = arg1;
         args[1] = arg2;
@@ -3538,9 +3530,9 @@ public:
         args[11] = arg12;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4, typename ARG_TYPE_5, typename ARG_TYPE_6, typename ARG_TYPE_7, typename ARG_TYPE_8, typename ARG_TYPE_9, typename ARG_TYPE_10, typename ARG_TYPE_11, typename ARG_TYPE_12, typename ARG_TYPE_13>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9, ARG_TYPE_10 arg10, ARG_TYPE_11 arg11, ARG_TYPE_12 arg12, ARG_TYPE_13 arg13)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9, ARG_TYPE_10 arg10, ARG_TYPE_11 arg11, ARG_TYPE_12 arg12, ARG_TYPE_13 arg13) {
         ScriptVariant_t args[13];
         args[0] = arg1;
         args[1] = arg2;
@@ -3557,9 +3549,9 @@ public:
         args[12] = arg13;
         return ExecuteFunction(hFunction, args, Q_ARRAYSIZE(args), pReturn, hScope, bWait);
     }
+
     template <typename ARG_TYPE_1, typename ARG_TYPE_2, typename ARG_TYPE_3, typename ARG_TYPE_4, typename ARG_TYPE_5, typename ARG_TYPE_6, typename ARG_TYPE_7, typename ARG_TYPE_8, typename ARG_TYPE_9, typename ARG_TYPE_10, typename ARG_TYPE_11, typename ARG_TYPE_12, typename ARG_TYPE_13, typename ARG_TYPE_14>
-    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9, ARG_TYPE_10 arg10, ARG_TYPE_11 arg11, ARG_TYPE_12 arg12, ARG_TYPE_13 arg13, ARG_TYPE_14 arg14)
-    {
+    ScriptStatus_t Call(HSCRIPT hFunction, HSCRIPT hScope, bool bWait, ScriptVariant_t* pReturn, ARG_TYPE_1 arg1, ARG_TYPE_2 arg2, ARG_TYPE_3 arg3, ARG_TYPE_4 arg4, ARG_TYPE_5 arg5, ARG_TYPE_6 arg6, ARG_TYPE_7 arg7, ARG_TYPE_8 arg8, ARG_TYPE_9 arg9, ARG_TYPE_10 arg10, ARG_TYPE_11 arg11, ARG_TYPE_12 arg12, ARG_TYPE_13 arg13, ARG_TYPE_14 arg14) {
         ScriptVariant_t args[14];
         args[0] = arg1;
         args[1] = arg2;
@@ -3581,7 +3573,7 @@ public:
 #pragma endregion
 
 
-//Particle system stuff
+// Particle system stuff
 
 template<class T> struct CUtlReference {
     CUtlReference* m_pNext;
