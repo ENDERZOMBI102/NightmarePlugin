@@ -3302,7 +3302,13 @@ public:
     virtual void Shutdown() = 0; // 1
     virtual bool ConnectDebugger() = 0; // 2
     virtual void DisconnectDebugger() = 0; // 3
+    /**
+     * @return the language this vm is running
+     */
     virtual ScriptLanguage_t GetLanguage() = 0; // 4
+	/**
+	 * @return the name of the language this vm is running
+	 */
     virtual const char* GetLanguageName() = 0; // 5
     virtual void AddSearchPath(const char* pszSearchPath) = 0; // 6
     virtual bool Frame(float simTime) = 0; // 7
