@@ -7,6 +7,9 @@
  */
 class Module {
 public:
+	/**
+	 * Indicates whether this module successfully loaded
+	 */
     bool hasLoaded;
 
 public:
@@ -24,6 +27,10 @@ public:
      * Get the module name
      */
     virtual const char* Name() = 0;
+    /**
+     * called on each server tick
+     */
+    virtual void Tick() {};
 };
 
 class Modules {
@@ -65,5 +72,9 @@ public:
      * Unregister all registered modules
      */
     void DeleteAll();
+    /**
+     * Tick all modules
+     */
+    void TickAll();
     ~Modules();
 };

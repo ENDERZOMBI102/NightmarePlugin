@@ -29,6 +29,13 @@ void Modules::DeleteAll()
         }
     }
 }
+void Modules::TickAll() {
+	for (const auto& mod : this->list) {
+		if (mod->hasLoaded)
+			mod->Tick();
+	}
+}
+
 Modules::~Modules()
 {
     this->DeleteAll();
