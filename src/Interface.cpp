@@ -95,7 +95,7 @@ void* Interface::GetPtr(const char* filename, const char* interfaceSymbol)
 {
     auto handle = Memory::GetModuleHandleByName(filename);
     if (!handle) {
-        console->DevWarning("smsm: Failed to open module %s!\n", filename);
+        console->DevWarning("NightmarePlugin: Failed to open module %s!\n", filename);
         return nullptr;
     }
 
@@ -103,24 +103,24 @@ void* Interface::GetPtr(const char* filename, const char* interfaceSymbol)
     Memory::CloseModuleHandle(handle);
 
     if (!CreateInterface) {
-        console->DevWarning("smsm: Failed to find symbol CreateInterface for %s!\n", filename);
+        console->DevWarning("NightmarePlugin: Failed to find symbol CreateInterface for %s!\n", filename);
         return nullptr;
     }
 
-    auto CreateInterfaceInternal = Memory::Read((uintptr_t)CreateInterface + CreateInterfaceInternal_Offset);
+    auto CreateInterfaceInternal = Memory::Read( (uintptr_t) CreateInterface + CreateInterfaceInternal_Offset );
     auto s_pInterfaceRegs = **reinterpret_cast<InterfaceReg***>(CreateInterfaceInternal + s_pInterfaceRegs_Offset);
 
     void* result = nullptr;
     for (auto& current = s_pInterfaceRegs; current; current = current->m_pNext) {
         if (std::strncmp(current->m_pName, interfaceSymbol, std::strlen(interfaceSymbol)) == 0) {
             result = current->m_CreateFn();
-            //console->DevMsg("smsm: Found interface %s at %p in %s!\n", current->m_pName, result, filename);
+            //console->DevMsg("NightmarePlugin: Found interface %s at %p in %s!\n", current->m_pName, result, filename);
             break;
         }
     }
 
     if (!result) {
-        console->DevWarning("smsm: Failed to find interface with symbol %s in %s!\n", interfaceSymbol, filename);
+        console->DevWarning("NightmarePlugin: Failed to find interface with symbol %s in %s!\n", interfaceSymbol, filename);
         return nullptr;
     }
     return result;

@@ -11,7 +11,7 @@
 #endif
 
 /**
- * Represents the tier1 DLL
+ * Represents the vstdlib DLL
  */
 class Tier1 : public Module {
 public:

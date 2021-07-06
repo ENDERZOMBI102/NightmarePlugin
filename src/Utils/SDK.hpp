@@ -1,14 +1,13 @@
 #pragma once
 #include <cmath>
 #include <cstring>
+#include "KeyValues.hpp"
 
 #ifdef _WIN32
 #define __funcc __thiscall
 #else
 #define __funcc __attribute__((__cdecl__))
 #endif
-
-// TODO: document this nightmare
 
 struct Vector {
     float x, y, z;
@@ -39,15 +38,15 @@ struct Vector {
     }
 
     inline float& operator[](int i) {
-        return ((float*)this)[i];
+        return ( (float*) this )[i];
     }
 
     inline float operator[](int i) const {
-        return ((float*)this)[i];
+        return ( (float*) this )[i];
     }
 
     inline float operator*(Vector vec) {
-        return x*vec.x + y*vec.y + z*vec.z;
+        return x * vec.x + y * vec.y + z * vec.z;
     }
 
     inline Vector operator^(Vector vec) {
@@ -65,7 +64,7 @@ struct QAngle {
 
 struct Color {
     Color(){
-        *( (int*) this) = 255;
+        *( (int*) this ) = 255;
     }
 
     Color(int _r, int _g, int _b) {
@@ -98,11 +97,114 @@ enum TextColor {
     COLOR_MAX
 };
 
+// -------------------------
+// CVAR flags
+// -------------------------
+
+/**
+ *
+ * \applicable_to CVARs, ConCommands
+ *
+ * Default, no flags at all
+ */
+#define FCVAR_NONE 0
+
+// Command to ConVars and ConCommands
+// ConVar Systems
+/**
+ *
+ * \applicable_to CVARs, ConCommands
+ *
+ * If this is set, don't add to linked list, etc.
+ */
+#define FCVAR_UNREGISTERED (1<<0)
+/**
+ *
+ * \applicable_to CVARs, ConCommands
+ *
+ * Hidden in released products.
+ * Flag is removed automatically if ALLOW_DEVELOPMENT_CVARS is defined.
+ */
 #define FCVAR_DEVELOPMENTONLY (1 << 1)
+/**
+ * \applicable_to CVARs, ConCommands
+ *
+ * defined by the game DLL (not for use in plugins)
+ */
+#define FCVAR_GAMEDLL (1<<2)
+/**
+ * \applicable_to CVARs, ConCommands
+ *
+ * defined by the client DLL (not for use in plugins)
+ */
+#define FCVAR_CLIENTDLL	(1<<3)
+/**
+ * \applicable_to CVARs, ConCommands
+ *
+ * Hidden. Doesn't appear in find or autocomplete.
+ * Like FCVAR_DEVELOPMENTONLY, but can't be compiled out.
+ */
 #define FCVAR_HIDDEN (1 << 4)
+
+// cvar only
+/**
+ * \applicable_to CVARs
+ *
+ * It's a server cvar, but we don't send the data since it's a password, etc.
+ * Sends 1 if it's not bland/zero, 0 otherwise as value
+ */
+#define FCVAR_PROTECTED	(1<<5)
+/**
+ * \applicable_to CVARs
+ *
+ * This cvar cannot be changed by clients connected to a multiplayer server.
+ */
+#define FCVAR_SPONLY (1<<6)
+/**
+ * \applicable_to CVARs
+ *
+ * set to cause it to be saved to vars.rc
+ */
+#define	FCVAR_ARCHIVE (1<<7)
+/**
+ * \applicable_to CVARs
+ *
+ * notifies players when changed.
+ */
 #define FCVAR_NOTIFY (1 << 8)
-#define FCVAR_NEVER_AS_STRING (1 << 12)
+/**
+ * \applicable_to CVARs
+ *
+ * changes the client's info string
+ */
+#define	FCVAR_USERINFO (1<<9)
+/**
+ * \applicable_to CVARs
+ *
+ * Marks a CVAR as a cheat.
+ * Marked cvars requires sv_cheats to be 1 to be used.
+ */
 #define FCVAR_CHEAT (1 << 14)
+
+/**
+ * \applicable_to CVARs
+ *
+ * This cvar's string cannot contain unprintable characters ( e.g., used for player name etc ).
+ */
+#define FCVAR_PRINTABLEONLY	(1<<10)
+/**
+ * \applicable_to CVARs
+ *
+ * If this is a FCVAR_SERVER, don't log changes to the log file / console if we are creating a log
+ */
+#define FCVAR_UNLOGGED (1<<11)
+/**
+ * \applicable_to CVARs
+ *
+ * never try to print a cvar marked with this.
+ */
+#define FCVAR_NEVER_AS_STRING (1 << 12)
+
 
 #define COMMAND_COMPLETION_MAXITEMS 64
 #define COMMAND_COMPLETION_ITEM_LENGTH 64
@@ -324,18 +426,86 @@ public:
 #define IN_MOVERIGHT (1 << 10)
 #define IN_ATTACK2 (1 << 11)
 #define IN_RELOAD (1 << 13)
+/**
+ * Player is holding the speed key
+ */
 #define IN_SPEED (1 << 17)
 
+/**
+ * At rest / on the ground
+ */
 #define FL_ONGROUND (1 << 0)
+/**
+ * Player flag -- Player is fully crouched
+ */
 #define FL_DUCKING (1 << 1)
+/**
+ * Player is frozen for 3rd person camera
+ */
 #define FL_FROZEN (1 << 5)
+/**
+ * Player can't move, but keeps key inputs for controlling another entity
+ */
 #define FL_ATCONTROLS (1 << 6)
 
 #define WL_Feet 1
 #define WL_Waist 2
 
-#define MOVETYPE_LADDER 9
-#define MOVETYPE_NOCLIP 8
+typedef enum {
+	/**
+	 * never moves
+	 */
+	MOVETYPE_NONE = 0,
+	/**
+	 * For players -- in TF2 commander view, etc.
+	 */
+	MOVETYPE_ISOMETRIC = 1,
+	/**
+	 * Player only - moving on the ground
+	 */
+	MOVETYPE_WALK = 2,
+	/**
+	 * gravity, special edge handling -- monsters use this
+	 */
+	MOVETYPE_STEP = 3,
+	/**
+	 * No gravity, but still collides with stuff
+	 */
+	MOVETYPE_FLY = 4,
+	/**
+	 * flies through the air + is affected by gravity
+	 */
+	MOVETYPE_FLYGRAVITY = 5,
+	/**
+	 * uses VPHYSICS for simulation
+	 */
+	MOVETYPE_VPHYSICS = 6,
+	/**
+	 * no clip to world, push and crush
+	 */
+	MOVETYPE_PUSH = 7,
+	/**
+	 * No gravity, no collisions, still do velocity/avelocity
+	 */
+	MOVETYPE_NOCLIP = 8,
+	/**
+	 * Used by players only when going onto a ladder
+	 */
+	MOVETYPE_LADDER = 9,
+	/**
+	 * Observer movement, depends on player's observer mode
+	 */
+	MOVETYPE_OBSERVER = 10,
+	/**
+	 * Allows the entity to describe its own physics
+	 */
+	MOVETYPE_CUSTOM = 11,
+
+	// should always be defined as the last item in the list
+	MOVETYPE_LAST = MOVETYPE_CUSTOM,
+
+	MOVETYPE_MAX_BITS = 4
+} MoveType_t;
 
 typedef enum {
     HS_NEW_GAME = 0,
@@ -383,30 +553,171 @@ struct InterfaceReg {
     }
 };
 
+typedef enum {
+	/**
+	 * keep going (allow default behavior)
+	 */
+	PLUGIN_CONTINUE = 0,
+	/**
+	 * run the game dll function but use our return value instead
+	 */
+	PLUGIN_OVERRIDE,
+	/**
+	 * don't run the game dll function at all (prevent default behavior)
+	 */
+	PLUGIN_STOP,
+} PLUGIN_RESULT;
+
 class IServerPluginCallbacks {
 public:
+	/**
+	 * Initialize the plugin to run
+	 * Return false if there is an error during startup.
+	 */
     virtual bool Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerFactory) = 0;
+    /**
+     * Called when the plugin should be shutdown
+     */
     virtual void Unload() = 0;
+    /**
+     * called when a plugins execution is stopped but the plugin is not unloaded
+     */
     virtual void Pause() = 0;
+	/**
+	 * called when a plugin should start executing again (sometime after a Pause() call)
+	 */
     virtual void UnPause() = 0;
+	/**
+	 * Returns string describing current plugin.  e.g., Admin-Mod.
+	 */
     virtual const char* GetPluginDescription() = 0;
+	/**
+	 * Called any time a new level is started (after GameInit() also on level transitions within a game)
+	 */
     virtual void LevelInit(char const* pMapName) = 0;
+	/**
+	 * The server is about to activate
+	 */
     virtual void ServerActivate(void* pEdictList, int edictCount, int clientMax) = 0;
+	/**
+	 * The server should run physics/think on all edicts
+	 */
     virtual void GameFrame(bool simulating) = 0;
+	/**
+	 * Called when a level is shutdown (including changing levels)
+	 */
     virtual void LevelShutdown() = 0;
+	/**
+	 * ???
+	 */
     virtual void ClientFullyConnect(void* pEdict) = 0;
+	/**
+	 * Client is going active
+	 */
     virtual void ClientActive(void* pEntity) = 0;
+	/**
+	 * Client is disconnecting from server
+	 */
     virtual void ClientDisconnect(void* pEntity) = 0;
+	/**
+	 * Client is connected and should be put in the game
+	 */
     virtual void ClientPutInServer(void* pEntity, char const* playername) = 0;
+	/**
+	 * Sets the client index for the client who typed the command into their console
+	 */
     virtual void SetCommandClient(int index) = 0;
+	/**
+	 * A player changed one/several replicated cvars (name etc)
+	 */
     virtual void ClientSettingsChanged(void* pEdict) = 0;
-    virtual int ClientConnect(bool* bAllowConnect, void* pEntity, const char* pszName, const char* pszAddress, char* reject, int maxrejectlen) = 0;
-    virtual int ClientCommand(void* pEntity, const void*& args) = 0;
-    virtual int NetworkIDValidated(const char* pszUserName, const char* pszNetworkID) = 0;
+	/**
+	 *  Client is connecting to server ( set retVal to false to reject the connection )
+	 *	You can specify a rejection message by writing it into reject
+	 */
+    virtual PLUGIN_RESULT ClientConnect(bool* bAllowConnect, void* pEntity, const char* pszName, const char* pszAddress, char* reject, int maxrejectlen) = 0;
+	/**
+	 * The client has typed a command at the console
+	 */
+    virtual PLUGIN_RESULT ClientCommand(void* pEntity, const void*& args) = 0;
+	/**
+	 * A user has had their network id setup and validated
+	 */
+    virtual PLUGIN_RESULT NetworkIDValidated(const char* pszUserName, const char* pszNetworkID) = 0;
+	/**
+	 * This is called when a query from IServerPluginHelpers::StartQueryCvarValue is finished.
+	 * iCookie is the value returned by IServerPluginHelpers::StartQueryCvarValue.
+	 * Added with version 2 of the interface.
+	 */
     virtual void OnQueryCvarValueFinished(int iCookie, void* pPlayerEntity, int eStatus, const char* pCvarName, const char* pCvarValue) = 0;
+	/**
+	 * added with version 3 of the interface.
+	 */
     virtual void OnEdictAllocated(void* edict) = 0;
+	/**
+	 * added with version 3 of the interface.
+	 */
     virtual void OnEdictFreed(const void* edict) = 0;
 };
+
+// DIALOGS STUFF
+
+typedef enum {
+	/**
+	 * just an on screen message
+	 */
+	DIALOG_MSG = 0,
+	/**
+	 * an options menu
+	 */
+	DIALOG_MENU,
+	/**
+	 * a richtext dialog
+	 */
+	DIALOG_TEXT,
+	/**
+	 * an entry box
+	 */
+	DIALOG_ENTRY,
+	/**
+	 * Ask the client to connect to a specified IP address.
+	 * Only the "time" and "title" keys are used.
+	 */
+	DIALOG_ASKCONNECT
+} DIALOG_TYPE;
+
+typedef int QueryCvarCookie_t;
+
+class IServerPluginHelpers {
+public:
+		/**
+		 * creates an onscreen menu with various option buttons
+		 *	The keyvalues param can contain these fields:
+		 *	"title" - (string) the title to show in the hud and in the title bar
+		 *	"msg" - (string) a longer message shown in the GameUI
+		 *  "color" - (color) the color to display the message in the hud (white by default)
+		 *	"level" - (int) the priority of this message (closer to 0 is higher), only 1 message can be outstanding at a time
+		 *	"time" - (int) the time in seconds this message should stay active in the GameUI (min 10 sec, max 200 sec)
+		 *
+		 * For DIALOG_MENU add sub keys for each option with these fields:
+		 *  "command" - (string) client command to run if selected
+		 *  "msg" - (string) button text for this option
+		*/
+		virtual void CreateMessage( void*& pEntity, DIALOG_TYPE type, KeyValues *data, IServerPluginCallbacks *plugin ) = 0;
+		virtual void ClientCommand( void*& pEntity, const char *cmd ) = 0;
+
+		/**
+		 * Call this to find out the value of a cvar on the client.
+		 *
+		 * It is an asynchronous query, and it will call IServerPluginCallbacks::OnQueryCvarValueFinished when
+		 * the value comes in from the client.
+		 *
+		 * Store the return value if you want to match this specific query to the OnQueryCvarValueFinished call.
+		 * Returns InvalidQueryCvarCookie if the entity is invalid.
+		 */
+		virtual QueryCvarCookie_t StartQueryCvarValue( void*& pEntity, const char *pName ) = 0;
+};
+// TODO: CONTINUE TO DOCUMENT THIS NIGHTMARE
 
 struct CPlugin {
     char m_szName[128]; //0

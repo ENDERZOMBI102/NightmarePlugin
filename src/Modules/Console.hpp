@@ -53,7 +53,7 @@ public:
 	 */
     _DevWarning DevWarning = nullptr;
 	/**
-	* @param pMsgFormat message to log
+	 * Getter for the CommandLine object
 	 */
     _CommandLine CommandLine = nullptr;
 
